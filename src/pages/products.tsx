@@ -3,7 +3,7 @@ import { type Product } from "@/types/product"
 import ProductCard from "@/components/productCard"
 import { Input } from "@/components/ui/input"
 const Products = () => {
-    const [productsList, setProductsList] = useState<Product[] | null>(null)
+    const [productsList, setProductsList] = useState<Product[]>([])
     const test: Product = {
         id: 21,
         createdAt: "123",
