@@ -1,10 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
-import Home from './components/pages/home'
-import Products from './components/pages/products'
+import Home from './pages/home'
+import Products from './pages/products'
 import { FullScreenLayout, MainLayout } from './components/layout'
 import LoginForm from './components/loginForm'
 import SignupForm from './components/registerForm'
+import ProductDetails from './pages/productDetails'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
             <Route path='/products' element={<Products />} />
+            <Route path='/products/:id' element={<ProductDetails />} />
           </Route>
 
           <Route element={<FullScreenLayout />}>
