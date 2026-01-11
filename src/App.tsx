@@ -4,7 +4,7 @@ import Home from './pages/home'
 import Products from './pages/products'
 import { FullScreenLayout, MainLayout } from './components/layout'
 import LoginForm from './components/loginForm'
-import SignupForm from './components/registerForm'
+import SignupForm from './components/signupForm'
 import ProductDetails from './pages/productDetails'
 
 
