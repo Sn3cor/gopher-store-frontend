@@ -2,8 +2,10 @@ import { useEffect, useState } from "react"
 import { type Product } from "@/types/product"
 import ProductCard from "@/components/productCard"
 import { Input } from "@/components/ui/input"
+import { useAuth } from "@/hooks/useAuth"
 const Products = () => {
     const [productsList, setProductsList] = useState<Product[]>([])
+    const { session } = useAuth()
     const test: Product = {
         id: 21,
         createdAt: "123",
@@ -88,9 +90,9 @@ const Products = () => {
                     <div>
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6">
                             {productsList?.map((prod) => {
-                                return <ProductCard product={prod} />
+                                return <ProductCard product={prod} isLoggedIn={session !== null} />
                             })}
-                            <ProductCard product={test} />
+                            <ProductCard product={test} isLoggedIn={session !== null} />
                         </div>
                     </div>
                 </div>

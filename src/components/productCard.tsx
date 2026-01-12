@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { type Product } from "@/types/product";
 
-const ProductCard = ({ product }: { product: Product }) => (
+const ProductCard = ({ product, isLoggedIn }: { product: Product, isLoggedIn: boolean }) => (
     <div className="rounded-xl border w-full max-w-sm py-4">
         <Link to={`/products/${product.id}`} className="group">
             <figure className="relative w-full h-64 overflow-hidden rounded-md">
@@ -22,7 +22,7 @@ const ProductCard = ({ product }: { product: Product }) => (
             </div>
         </Link >
         <div className="w-full px-4">
-            <Button disabled={product.quantity <= 0} className="mt-3 w-full ">
+            <Button disabled={product.quantity <= 0 || !isLoggedIn} className="mt-3 w-full ">
                 Add to Cart
             </Button>
         </div>

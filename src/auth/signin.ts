@@ -1,29 +1,28 @@
 import type { ApiError } from "@/types/errors"
-import type { UserSignup } from "@/types/user"
-import { type Session } from "@/types/user"
+import type { Session, UserSignin } from "@/types/user"
 
-const handleSignup = async ({ account, errorSetter, login }: {
-    account: UserSignup
+
+const handleSignin = async ({ user, errorSetter, login }: {
+    user: UserSignin
     errorSetter: (err: ApiError | null) => void
     login: (s: Session) => void
 }) => {
     try {
-        const res = await fetch("http://localhost:3000/api/signup", {
+        const res = await fetch("http://localhost:3000/api/signin", {
             method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                ...account,
-                isAdmin: false
+                ...user
             })
         })
 
         if (!res.ok) {
-            const error: ApiError = await res.json()
+            const error = await res.json()
             errorSetter(error)
-            throw new Error(error.message || "Signup failure")
+            throw new Error(error.message || "Sign in failure")
         }
 
         const data = await res.json()
@@ -35,9 +34,7 @@ const handleSignup = async ({ account, errorSetter, login }: {
             accessToken: data.accessToken,
             refreshToken: data.refreshToken
         }
-
         login(sessionInfo)
-
 
     }
     catch (err) {
@@ -45,4 +42,4 @@ const handleSignup = async ({ account, errorSetter, login }: {
     }
 }
 
-export { handleSignup }
+export { handleSignin }

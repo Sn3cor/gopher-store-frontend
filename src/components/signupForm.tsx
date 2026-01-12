@@ -14,9 +14,10 @@ import {
     FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import { useAuth } from "@/hooks/useAuth"
 import { type ApiError } from "@/types/errors"
 import { useState, type SetStateAction, type Dispatch, useEffect } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 const SignupForm = ({ ...props }: React.ComponentProps<typeof Card>) => {
     const [email, setEmail] = useState<string>("")
@@ -25,6 +26,12 @@ const SignupForm = ({ ...props }: React.ComponentProps<typeof Card>) => {
     const [secPassword, setSecPassword] = useState<string>("")
     const [isMatching, setIsMatching] = useState<boolean>(true)
     const [lastError, setLastError] = useState<ApiError | null>(null)
+    const navigate = useNavigate()
+    const { session, login } = useAuth()
+
+    useEffect(() => {
+        if (session) navigate("/")
+    }, [session])
 
     const handleInput = (e: React.ChangeEvent<HTMLInputElement>, setter: Dispatch<SetStateAction<string>>) => {
         setter(e.target.value)
@@ -38,15 +45,21 @@ const SignupForm = ({ ...props }: React.ComponentProps<typeof Card>) => {
             return
         }
         handleSignup({
-            email: email,
-            username: username,
-            password: password
-        }, setLastError)
+            account: {
+                email: email,
+                username: username,
+                password: password
+            },
+            errorSetter: setLastError,
+            login: login
+
+        })
     }
 
     useEffect(() => {
         console.log(lastError)
     }, [lastError])
+
     return (
         <Card {...props}>
             <CardHeader>
@@ -104,7 +117,7 @@ const SignupForm = ({ ...props }: React.ComponentProps<typeof Card>) => {
                                 {lastError !== null ? <p className="text-red-600 text-sm">{lastError.message}</p> : null}
                                 <Button type="button"
                                     className="cursor-pointer"
-                                    onClick={() => { handleClick() }}
+                                    onClick={handleClick}
                                     disabled={email === "" || username === "" || password === "" || secPassword === ""}
                                 >Create Account</Button>
                                 <FieldDescription className="px-6 text-center">

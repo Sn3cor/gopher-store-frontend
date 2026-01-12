@@ -14,11 +14,46 @@ import {
     FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react"
+import type { ApiError } from "@/types/errors"
+import { handleSignin } from "@/auth/signin"
+import { useAuth } from "@/hooks/useAuth"
+
+
 const LoginForm = ({
     className,
     ...props
 }: React.ComponentProps<"div">) => {
+
+    const [email, setEmail] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
+    const [lastError, setLastError] = useState<ApiError | null>(null)
+    const navigate = useNavigate()
+    const { session, login } = useAuth()
+
+    useEffect(() => {
+        if (session) navigate("/")
+    }, [session])
+
+    const handleInput = (e: React.ChangeEvent<HTMLInputElement>, setter: Dispatch<SetStateAction<string>>) => {
+        setter(e.target.value)
+    }
+
+    const handleClick = () => {
+        setLastError(null)
+        handleSignin({
+            user: {
+                email: email,
+                password: password
+            },
+            errorSetter: setLastError,
+            login: login
+
+        })
+    }
+
+
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <Card>
@@ -38,22 +73,23 @@ const LoginForm = ({
                                     type="email"
                                     placeholder="m@example.com"
                                     required
+                                    onChange={(e) => handleInput(e, setEmail)}
                                 />
                             </Field>
                             <Field>
                                 <div className="flex items-center">
                                     <FieldLabel htmlFor="password">Password</FieldLabel>
-                                    <a
-                                        href="#"
-                                        className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-                                    >
-                                        Forgot your password?
-                                    </a>
                                 </div>
-                                <Input id="password" type="password" required />
+                                <Input id="password" type="password" onChange={(e) => handleInput(e, setPassword)} />
                             </Field>
                             <Field>
-                                <Button type="submit">Login</Button>
+                                {lastError !== null ? <p className="text-red-600 text-sm">{lastError.message}</p> : null}
+                                <Button
+                                    type="button"
+                                    className="cursor-pointer"
+                                    disabled={email === "" && password === ""}
+                                    onClick={handleClick}
+                                >Login</Button>
                                 <FieldDescription className="text-center">
                                     Don&apos;t have an account? <Link to="/sign-up">Sign up</Link>
                                 </FieldDescription>
