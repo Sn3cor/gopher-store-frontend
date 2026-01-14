@@ -1,1 +1,1 @@
-# react-store-frontend
+# gopher-store-frontend
