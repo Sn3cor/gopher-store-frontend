@@ -31,6 +31,7 @@ const handleSignin = async ({ user, errorSetter, login }: {
         const sessionInfo: Session = {
             userId: data.userId,
             username: data.username,
+            isAdmin: data.isAdmin,
             accessToken: data.accessToken,
             refreshToken: data.refreshToken
         }

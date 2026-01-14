@@ -1,7 +1,10 @@
+import { useAuth } from "@/hooks/useAuth";
 import type { Review } from "@/types/review";
 import { Star } from "lucide-react";
+import { Button } from "./ui/button";
 
 const ReviewCard = ({ review }: { review: Review }) => {
+    const { session } = useAuth()
     return (
         <div className="flex gap-4 rounded-xl border py-4">
             <div className="min-w-0 flex-1 px-4">
@@ -22,7 +25,10 @@ const ReviewCard = ({ review }: { review: Review }) => {
                         <span className="text-muted-foreground text-sm whitespace-nowrap">{review.createdAt}</span>
                     </div>
                 </div>
-                <p>{review.comment}</p>
+                <p className="mb-4">{review.comment}</p>
+                <div className="w-full flex justify-end">
+                    {session?.isAdmin ? <Button variant="destructive">Remove</Button > : null}
+                </div>
             </div>
         </div>
     )

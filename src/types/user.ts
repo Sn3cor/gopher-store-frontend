@@ -12,6 +12,7 @@ export interface UserSignin {
 export interface Session {
     userId: number
     username: string
+    isAdmin: boolean
     accessToken: string
     refreshToken: string
 }

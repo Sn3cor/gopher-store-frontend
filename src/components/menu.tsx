@@ -9,6 +9,8 @@ import { Link } from "react-router-dom"
 
 import { Button } from "./ui/button"
 import { useAuth } from "@/hooks/useAuth"
+import MenuUser from "./menuUser"
+import { ShoppingBag } from "lucide-react"
 
 interface navigation {
     href: string
@@ -47,8 +49,16 @@ const Navbar = () => {
                     </NavigationMenu>
                 </div>
                 {session ?
-                    <p>Signed In as: {session.username}</p> :
-                    <div className="flex items-center gap-2">
+                    <div className="flex gap-4 items-center">
+                        <Button asChild variant="ghost" size="icon" className="relative" aria-label="Cart">
+                            <Link to='/cart'>
+                                <ShoppingBag aria-hidden="true" />
+                            </Link>
+                        </Button>
+                        <MenuUser />
+                    </div>
+                    :
+                    <div className="flex items-center gap-4">
                         <Button asChild size="sm" variant="ghost" className="text-sm">
                             <Link to='/sign-in'>Sign In</Link>
                         </Button>
@@ -59,7 +69,7 @@ const Navbar = () => {
                 }
 
             </div>
-        </header>
+        </header >
     )
 }
 

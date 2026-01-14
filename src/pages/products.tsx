@@ -3,6 +3,7 @@ import { type Product } from "@/types/product"
 import ProductCard from "@/components/productCard"
 import { Input } from "@/components/ui/input"
 import { useAuth } from "@/hooks/useAuth"
+
 const Products = () => {
     const [productsList, setProductsList] = useState<Product[]>([])
     const { session } = useAuth()
@@ -18,6 +19,7 @@ const Products = () => {
         image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_t.png",
         quantity: 0
     }
+
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -36,8 +38,10 @@ const Products = () => {
         }
         fetchProducts()
     }, [])
+
+
     return (
-        <section className="flex-1 flex flex-wrap  w-full py-10 lg:py-16">
+        <section className="flex-1 flex flex-wrap  w-full py-12 lg:py-20">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-[240px_1fr] gap-8">
                     <div></div>

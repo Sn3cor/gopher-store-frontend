@@ -9,8 +9,8 @@ const Home = () => {
             <div className="mx-auto max-w-7xl px-4">
                 <div className="grid items-center gap-8 lg:grid-cols-2">
                     <header className="flex flex-col items-center text-center lg:items-start lg:text-left">
-                        <h1 className="font-heading my-4 text-5xl text-balance md:text-6xl lg:leading-14">
-                            Welcome to the react-store 👋
+                        <h1 className="font-heading my-4 text-5xl text-balance md:text-6xl lg:leading-16">
+                            Welcome to the gopher-store 👋
                         </h1>
                         {session ?
                             <p className="text-muted-foreground mb-8 text-balance lg:text-xl">Greate to see you again, <b>{session.username}</b> </p> :

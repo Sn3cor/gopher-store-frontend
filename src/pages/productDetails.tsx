@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom"
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReviewCard from "@/components/reviewCard";
+import { useCart } from "@/hooks/useCart";
 
 const ProductDetails = () => {
     const [product, setProduct] = useState<Product | null>(null)
@@ -42,7 +43,7 @@ const ProductDetails = () => {
 
 
     return (
-        <section className="flex-1 w-full py-10 lg:py-16">
+        <section className="flex-1 w-full py-12 lg:py-20">
             {product ?
                 <div >
                     <Details product={product} reviews={reviews} reviewsAvg={reviewsAvg} />
@@ -57,8 +58,16 @@ const ProductDetails = () => {
 
 
 const Details = ({ product, reviews, reviewsAvg }: { product: Product, reviews: Review[], reviewsAvg: number }) => {
+    const { addToCart } = useCart(product)
+    const handleAddClick = async () => {
+        try {
+            await addToCart();
+        } catch (err) {
+            console.log(err)
+        }
+    };
     return (
-        <div className="mx-auto max-w-7xl px-4">
+        <div className="mx-auto max-w-7xl px-10 lg:px-4 pb-8 lg:pb-0">
             <div className="grid gap-8 lg:grid-cols-3">
                 <div className="col-span-2 flex flex-col-reverse gap-4 md:flex-row">
 
@@ -107,7 +116,7 @@ const Details = ({ product, reviews, reviewsAvg }: { product: Product, reviews: 
 
 
                     <div className="flex gap-3">
-                        <Button size="lg">Add to Cart</Button>
+                        <Button size="lg" className="cursor-pointer" onClick={handleAddClick}>Add to Cart</Button>
                     </div>
                 </div>
             </div>

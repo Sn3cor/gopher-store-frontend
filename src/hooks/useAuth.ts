@@ -8,8 +8,22 @@ export const useAuth = () => {
         addSession(session)
     }
 
-    const logout = () => {
+    const logout = async () => {
         removeSession()
+        try {
+            const res = await fetch("http://localhost:3000/api/logout", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ refreshToken: session?.refreshToken }),
+            })
+
+            const data = await res.json()
+            console.log(data)
+        }
+        catch (error) {
+            console.log(error)
+        }
+
     }
 
     return { session, login, logout, setSession }

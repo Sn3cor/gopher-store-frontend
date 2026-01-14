@@ -1,9 +1,9 @@
 import type { Session } from "@/types/user";
-import { createContext } from "react";
+import { createContext, type Dispatch, type SetStateAction } from "react";
 
 export interface AuthContextType {
     session: Session | null
-    setSession: (s: Session | null) => void
+    setSession: Dispatch<SetStateAction<Session | null>>
 }
 
 export const AuthContext = createContext<AuthContextType>({
