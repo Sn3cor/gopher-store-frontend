@@ -12,7 +12,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
             <div className="flex-1">
                 <div className="flex items-center justify-between">
                     <div className="space-y-1">
-                        <h3 className="font-semibold">{cartItem.product.title}</h3>
+                        <h3 className="font-semibold line-clamp-1">{cartItem.product.title}</h3>
                         <p className="text-sm">${cartItem.amount * cartItem.product.price}</p>
                     </div>
                     <div className="flex flex-col space-x-4 sm:flex-row">

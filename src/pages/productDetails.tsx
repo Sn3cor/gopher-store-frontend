@@ -146,7 +146,7 @@ const Reviews = ({ reviews, reviewsAvg }: { reviews: Review[], reviewsAvg: numbe
                     <ReviewCard review={
                         {
                             id: 1,
-                            createdAt: "DateString",
+                            createdAt: "01/12/25",
                             updatedAt: "DateString",
                             deletedAt: null,
                             productId: 1,

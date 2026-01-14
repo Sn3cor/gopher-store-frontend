@@ -12,9 +12,27 @@ const Cart = () => {
     const [delivery, setDelivery] = useState<number>(0.00)
     const { session } = useAuth()
     const { fetchWithRefresh } = useApi()
-
-
     const navigate = useNavigate()
+
+    const handleCreateOrder = () => {
+        const createOrder = async () => {
+            try {
+                const res = await fetchWithRefresh("http://localhost:3000/api/orders", {
+                    method: "POST",
+                })
+
+                const data = res.json()
+                console.log(data)
+                navigate("/orders")
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+
+        createOrder()
+    }
+
     useEffect(() => {
         if (!session) navigate("/")
     }, [session])
@@ -50,9 +68,14 @@ const Cart = () => {
 
                 <div className="mt-6 grid items-start gap-4 lg:grid-cols-3 lg:gap-6">
                     <div className="space-y-3 lg:col-span-2">
-                        {cartItems.map((item, key) => (
-                            <CartItemCard key={key} cartItem={item} />
-                        ))}
+                        {
+                            cartItems.length > 0 ?
+                                cartItems.map((item, key) => (
+                                    <CartItemCard key={key} cartItem={item} />
+                                ))
+                                :
+                                <h3 className="text-2xl font-black tracking-tight">You have an empty cart</h3>
+                        }
 
 
                     </div>
@@ -81,7 +104,7 @@ const Cart = () => {
                         </div>
 
                         <div className="mt-auto">
-                            <Button className="w-full" disabled={cartItems.length == 0}>Checkout</Button>
+                            <Button className="w-full cursor-pointer" disabled={cartItems.length == 0} onClick={handleCreateOrder}>Checkout</Button>
                         </div>
                     </div>
                 </div>
