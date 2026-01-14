@@ -28,12 +28,24 @@ const navigationLinks: navigation[] = [
     }
 ]
 
+
+const Logo = () => {
+    return (
+        <Link to="/" className="flex items-center space-x-2">
+            <img src="/logo.png" className="size-12 dark:invert" alt="bundui logo" />
+        </Link>
+    );
+};
+
 const Navbar = () => {
     const { session } = useAuth()
     return (
         <header className="border-b px-4 md:px-6">
             <div className="flex h-16 items-center justify-between gap-4">
-                <div className="flex gab-2">
+                <div className="flex gap-2">
+
+                    <Logo />
+
                     <NavigationMenu>
                         <NavigationMenuList>
                             {navigationLinks.map((link, index) => {
