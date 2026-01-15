@@ -6,6 +6,7 @@ import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ReviewCard from "@/components/reviewCard";
 import { useCart } from "@/hooks/useCart";
+import { useAuth } from "@/hooks/useAuth";
 
 const ProductDetails = () => {
     const [product, setProduct] = useState<Product | null>(null)
@@ -59,6 +60,7 @@ const ProductDetails = () => {
 
 const Details = ({ product, reviews, reviewsAvg }: { product: Product, reviews: Review[], reviewsAvg: number }) => {
     const { addToCart } = useCart()
+    const { session } = useAuth()
     const handleAddClick = async () => {
         try {
             await addToCart(product);
@@ -116,7 +118,7 @@ const Details = ({ product, reviews, reviewsAvg }: { product: Product, reviews: 
 
 
                     <div className="flex gap-3">
-                        <Button size="lg" className="cursor-pointer" onClick={handleAddClick}>Add to Cart</Button>
+                        <Button size="lg" className="cursor-pointer" disabled={session === null} onClick={handleAddClick}>Add to Cart</Button>
                     </div>
                 </div>
             </div>
