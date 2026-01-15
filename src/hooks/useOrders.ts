@@ -17,11 +17,12 @@ export const useOrders = () => {
             })
 
             const data = await res.json()
-            setOrders(data)
+            setOrders(data.reverse())
             console.log(data)
         }
         catch (error) {
             console.log(error)
+            throw error
         }
     }
 
@@ -30,13 +31,17 @@ export const useOrders = () => {
             const res = await fetchWithRefresh("http://localhost:3000/api/orders", {
                 method: "POST",
             })
-
+            if (!res.ok) {
+                const error = await res.json()
+                throw new Error(error.message)
+            }
             const data = await res.json()
             console.log(data)
 
         }
         catch (error) {
             console.log(error)
+            throw error
         }
     }
 
