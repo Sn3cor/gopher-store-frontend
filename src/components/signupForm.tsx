@@ -85,7 +85,7 @@ const SignupForm = ({ ...props }: React.ComponentProps<typeof Card>) => {
                                 onChange={(e) => handleInput(e, setEmail)}
                             />
                             <FieldDescription>
-                                We&apos;ll use this to contact you. We will not share your email
+                                We'll use this to contact you. We will not share your email
                                 with anyone else.
                             </FieldDescription>
                         </Field>
@@ -95,9 +95,6 @@ const SignupForm = ({ ...props }: React.ComponentProps<typeof Card>) => {
                                 handleInput(e, setPassword)
 
                             }} />
-                            <FieldDescription>
-                                Must be at least 8 characters long.
-                            </FieldDescription>
                         </Field>
                         <Field>
                             <FieldLabel htmlFor="confirm-password">

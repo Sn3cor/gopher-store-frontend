@@ -1,7 +1,7 @@
 import type { Product } from "./product"
 
 export interface Order {
-    orderId: number
+    id: number
     userID: number
     items: OrderItem[]
     total: number

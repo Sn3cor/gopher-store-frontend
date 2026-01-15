@@ -1,36 +1,28 @@
 import CartItemCard from "@/components/cartItem"
 import { Button } from "@/components/ui/button"
-import { useApi } from "@/hooks/useApi"
 import { useAuth } from "@/hooks/useAuth"
-import type { CartItem } from "@/types/cartItem"
+import { useCart } from "@/hooks/useCart"
+import { useOrders } from "@/hooks/useOrders"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 const Cart = () => {
-    const [cartItems, setCartItems] = useState<CartItem[]>([])
     const [price, setPrice] = useState<number>(0.00)
     const [delivery, setDelivery] = useState<number>(0.00)
     const { session } = useAuth()
-    const { fetchWithRefresh } = useApi()
+    const { createOrder } = useOrders()
+    const { cartItems, fetchCart } = useCart()
     const navigate = useNavigate()
 
-    const handleCreateOrder = () => {
-        const createOrder = async () => {
-            try {
-                const res = await fetchWithRefresh("http://localhost:3000/api/orders", {
-                    method: "POST",
-                })
 
-                const data = res.json()
-                console.log(data)
-                navigate("/orders")
-            }
-            catch (error) {
-                console.log(error)
-            }
+    const handleCreateOrder = async () => {
+        try {
+            await createOrder()
+            navigate("/orders")
         }
-
-        createOrder()
+        catch (error) {
+            console.log(error)
+        }
     }
 
     useEffect(() => {
@@ -38,27 +30,19 @@ const Cart = () => {
     }, [session])
 
     useEffect(() => {
-        const fetchCart = async () => {
-            try {
-                const res = await fetchWithRefresh("http://localhost:3000/api/cart", {
-                    method: "GET",
-                })
-                const data = await res.json()
-                console.log(data)
-                setCartItems(data.items)
-            }
-            catch (error) {
-                console.log(error)
-            }
+        try {
+            fetchCart()
         }
-
-        fetchCart()
+        catch (error) {
+            console.log(error)
+        }
     }, [])
 
     useEffect(() => {
         setPrice(cartItems.reduce((prev, curr) => prev + (curr.amount * curr.product.price), 0))
         setDelivery(cartItems.length > 0 ? 5.00 : 0.00)
     }, [cartItems])
+
     return (
         <section className="flex-1 flex flex-wrap  w-full py-12 lg:py-20">
             <div className="container mx-auto px-4">

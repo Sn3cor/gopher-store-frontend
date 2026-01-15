@@ -6,10 +6,10 @@ import { useAuth } from "@/hooks/useAuth"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 
+
 const Products = () => {
     const [productsList, setProductsList] = useState<Product[]>([])
     const { session } = useAuth()
-
     const categories = new Set(productsList.map(item => item.category))
 
     useEffect(() => {
@@ -43,7 +43,6 @@ const Products = () => {
                 </div>
                 <div className="grid grid-cols-[240px_1fr] gap-8">
                     <div className="space-y-10">
-                        {/* Filter group */}
                         <div className="space-y-4">
                             <div className="text-muted-foreground flex justify-between text-[11px] font-semibold tracking-widest uppercase">
                                 Keywords
@@ -52,7 +51,6 @@ const Products = () => {
                         </div>
 
 
-                        {/* Filter group */}
                         <div className="space-y-4">
                             <div className="text-muted-foreground flex justify-between text-[11px] font-semibold tracking-widest uppercase">
                                 Categories

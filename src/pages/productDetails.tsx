@@ -58,10 +58,10 @@ const ProductDetails = () => {
 
 
 const Details = ({ product, reviews, reviewsAvg }: { product: Product, reviews: Review[], reviewsAvg: number }) => {
-    const { addToCart } = useCart(product)
+    const { addToCart } = useCart()
     const handleAddClick = async () => {
         try {
-            await addToCart();
+            await addToCart(product);
         } catch (err) {
             console.log(err)
         }

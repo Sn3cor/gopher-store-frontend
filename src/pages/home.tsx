@@ -1,5 +1,6 @@
 import { useAuth } from "@/hooks/useAuth"
 import LoginForm from "../components/loginForm"
+import UserCard from "@/components/userCard"
 
 const Home = () => {
     const { session } = useAuth()
@@ -8,18 +9,18 @@ const Home = () => {
         <section className="flex-1 flex flex-col items-center justify-center w-full py-10 lg:py-16">
             <div className="mx-auto max-w-7xl px-4">
                 <div className="grid items-center gap-8 lg:grid-cols-2">
-                    <header className="flex flex-col items-center text-center lg:items-start lg:text-left">
-                        <h1 className="font-heading my-4 text-5xl text-balance md:text-6xl lg:leading-16">
+                    <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
+                        <h1 className="font-heading my-4 text-5xl w-fit text-balance md:text-6xl lg:leading-16">
                             Welcome to the gopher-store 👋
                         </h1>
                         {session ?
                             <p className="text-muted-foreground mb-8 text-balance lg:text-xl">Greate to see you again, <b>{session.username}</b> </p> :
                             <p className="text-muted-foreground mb-8 text-balance lg:text-xl">Please sign in or create an account to start shopping</p>
                         }
-                    </header>
+                    </div>
                     <div className="flex justify-center">
                         {session ?
-                            "Tu coś bedzie" :
+                            <UserCard className="w-full max-w-sm" /> :
                             <LoginForm className="w-full max-w-sm" />
                         }
 

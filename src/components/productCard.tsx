@@ -4,10 +4,10 @@ import { type Product } from "@/types/product";
 import { useCart } from "@/hooks/useCart";
 
 const ProductCard = ({ product, isLoggedIn }: { product: Product, isLoggedIn: boolean }) => {
-    const { addToCart } = useCart(product)
+    const { addToCart } = useCart()
     const handleAddClick = async () => {
         try {
-            await addToCart();
+            await addToCart(product);
 
         } catch (err) {
             console.log(err)
@@ -29,7 +29,7 @@ const ProductCard = ({ product, isLoggedIn }: { product: Product, isLoggedIn: bo
                         <p className="font-medium line-clamp-1">{product.title}</p>
                         <p className="text-muted-foreground">${product.price}</p>
                     </div>
-                    <p className={product.quantity > 0 ? "text-green-600" : "text-red-600"}>{product.quantity > 0 ? "In magazine" : "Out of stock"}</p>
+                    <p className={product.quantity > 0 ? "text-green-600" : "text-red-600"}>{product.quantity > 0 ? `In stock: ${product.quantity}` : "Out of stock"}</p>
                 </div>
             </Link >
             <div className="w-full px-4">

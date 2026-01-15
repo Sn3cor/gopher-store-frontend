@@ -1,38 +1,26 @@
 import OrderDetails from "@/components/orderDetails"
 import { ItemGroup, ItemSeparator } from "@/components/ui/item"
-import { useApi } from "@/hooks/useApi"
 import { useAuth } from "@/hooks/useAuth"
-import { type Order } from "@/types/order"
+import { useOrders } from "@/hooks/useOrders"
 import { Item } from "@radix-ui/react-navigation-menu"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 const Orders = () => {
     const { session } = useAuth()
-    const { fetchWithRefresh } = useApi()
     const navigate = useNavigate()
-    const [orders, setOrders] = useState<Order[]>([])
+    const { orders, fetchOrders } = useOrders()
 
     useEffect(() => {
         if (!session) navigate("/")
     }, [session])
 
     useEffect(() => {
-        const fetchOrders = async () => {
-            try {
-                const res = await fetchWithRefresh("http://localhost:3000/api/orders", {
-                    method: "GET",
-                })
-                const data = await res.json()
-                setOrders(data)
-                console.log(data)
-            }
-            catch (error) {
-                console.log(error)
-            }
+        try {
+            fetchOrders();
+        } catch (err) {
+            console.log(err)
         }
-
-        fetchOrders()
     }, [])
 
     return (
@@ -48,7 +36,7 @@ const Orders = () => {
                         {orders.length > 0 ?
                             <ItemGroup>
                                 {orders.map((order, key) => (
-                                    <React.Fragment key={order.orderId || key}>
+                                    <React.Fragment key={order.id}>
                                         <Item className="list-none block">
                                             <OrderDetails key={key} order={order} />
                                         </Item>
