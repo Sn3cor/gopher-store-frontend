@@ -11,7 +11,7 @@ const Cart = () => {
     const [delivery, setDelivery] = useState<number>(0.00)
     const { session } = useAuth()
     const { createOrder } = useOrders()
-    const { cartItems, fetchCart } = useCart()
+    const { cartItems, fetchCart, removeFromCart } = useCart()
     const navigate = useNavigate()
 
 
@@ -55,7 +55,7 @@ const Cart = () => {
                         {
                             cartItems.length > 0 ?
                                 cartItems.map((item, key) => (
-                                    <CartItemCard key={key} cartItem={item} />
+                                    <CartItemCard key={key} cartItem={item} removeFunc={removeFromCart} />
                                 ))
                                 :
                                 <h3 className="text-2xl font-black tracking-tight">You have an empty cart</h3>

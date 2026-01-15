@@ -2,8 +2,17 @@ import { Minus, Plus, Trash } from "lucide-react"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 import type { CartItem } from "@/types/cartItem"
+import type { Product } from "@/types/product"
 
-const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
+const CartItemCard = ({ cartItem, removeFunc }: { cartItem: CartItem, removeFunc: (product: Product) => void }) => {
+    const handleRemove = async () => {
+        try {
+            await removeFunc(cartItem.product)
+        }
+        catch (error) {
+            console.log(error)
+        }
+    }
     return (
         <div className="flex items-center space-x-4 rounded-xl border p-4">
             <div className="relative shrink-0">
@@ -25,7 +34,7 @@ const CartItemCard = ({ cartItem }: { cartItem: CartItem }) => {
                                 <Plus />
                             </Button>
                         </div>
-                        <Button variant="ghost" size="icon" className="relative">
+                        <Button variant="ghost" size="icon" className="relative cursor-pointer" onClick={handleRemove}>
                             <Trash color="red" />
                         </Button>
                     </div>

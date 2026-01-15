@@ -20,6 +20,7 @@ export const useCart = () => {
         }
         catch (error) {
             console.log(error)
+            throw error
         }
     }
 
@@ -34,8 +35,24 @@ export const useCart = () => {
         }
         catch (error) {
             console.log(error)
+            throw error
         }
     }
 
-    return { cartItems, addToCart, fetchCart };
+    const removeFromCart = async (product: Product) => {
+        try {
+            const res = await fetchWithRefresh(`http://localhost:3000/api/cart/${product.id}`, {
+                method: "DELETE"
+            })
+            const data = await res.json()
+            console.log(data)
+            await fetchCart()
+        }
+        catch (error) {
+            console.log(error)
+            throw error
+        }
+    }
+
+    return { cartItems, addToCart, fetchCart, removeFromCart };
 };
