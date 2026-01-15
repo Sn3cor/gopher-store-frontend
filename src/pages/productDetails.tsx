@@ -103,7 +103,7 @@ const Details = ({ product, reviews, reviewsAvg }: { product: Product, reviews: 
                     <div>
                         <p className="text-foreground text-3xl font-bold md:text-4xl">${product.price}</p>
                         <p className="text-muted-foreground mt-1 text-sm">(inclusive of all taxes)</p>
-                        <p className={product.quantity > 0 ? "text-green-600" : "text-red-600"}>{product.quantity > 0 ? "In magazine" : "Out of stock"}</p>
+                        <p className={product.quantity > 0 ? "text-green-600" : "text-red-600"}>{product.quantity > 0 ? `In stock: ${product.quantity}` : "Out of stock"}</p>
                     </div>
 
 
