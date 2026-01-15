@@ -6,7 +6,7 @@ const OrderDetails = ({ order }: { order: Order }) => {
         <div className="grid gap-2 w-full p-2">
             <div className="flex flex-col gap-2 py-4">
                 <h3 className="text-2xl font-black tracking-tight">
-                    Order <span className="text-primary">#{order.orderId}</span>
+                    Order <span className="text-primary">#{order.id}</span>
                 </h3>
             </div>
 
