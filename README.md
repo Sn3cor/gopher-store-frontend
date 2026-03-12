@@ -3,6 +3,7 @@
 
 This repository contains frontend for the Gopher Store, which is an online shop with more of a B2B business model. Browsing products is available for everybody, but managing the cart and creating orders is reserved only for authorized partners.
 
+[Backend](https://github.com/Sn3cor/gopher-store-backend)
 
 ## Features
 - [x] Product List
